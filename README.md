@@ -200,3 +200,9 @@ Cкриншот графика, постоенного на основе мет�
 
 ---
 
+### Задание 9
+
+<img width="1323" height="640" alt="Alertmanager" src="https://github.com/user-attachments/assets/d80897bb-cd71-4ec5-a5c4-89ddb0030175" />
+
+---
+
