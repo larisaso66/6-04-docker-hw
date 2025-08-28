@@ -73,74 +73,109 @@ services:
 
 ### Задание 4
 
-`Приведите ответ в свободной форме........`
-
-1. `Заполните здесь этапы выполнения, если требуется ....`
-2. `Заполните здесь этапы выполнения, если требуется ....`
-3. `Заполните здесь этапы выполнения, если требуется ....`
-4. `Заполните здесь этапы выполнения, если требуется ....`
-5. `Заполните здесь этапы выполнения, если требуется ....`
-6. 
-
 ```
-Поле для вставки кода...
-....
-....
-....
-....
+pushgateway:
+    image: prom/pushgateway:latest
+    container_name: OsakovskayaAM-netology-pushgateway
+    ports:
+      - "9091:9091" 
+    networks:
+      OsakovskayaAM-my-netology-hw:
 ```
-
-`При необходимости прикрепитe сюда скриншоты
-![Название скриншота](ссылка на скриншот)`
 
 ---
 
 ### Задание 5
 
-`Приведите ответ в свободной форме........`
-
-1. `Заполните здесь этапы выполнения, если требуется ....`
-2. `Заполните здесь этапы выполнения, если требуется ....`
-3. `Заполните здесь этапы выполнения, если требуется ....`
-4. `Заполните здесь этапы выполнения, если требуется ....`
-5. `Заполните здесь этапы выполнения, если требуется ....`
-6. 
-
 ```
-Поле для вставки кода...
-....
-....
-....
-....
+grafana:
+    image: grafana/grafana:latest
+    container_name: OsakovskayaAM-netology-grafana
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./grafana/grafana.ini:/etc/grafana/grafana.ini
+      - ./grafana/provisioning:/etc/grafana/provisioning
+    environment:
+      - GF_PATHS_CONFIG=/etc/grafana/grafana.ini
+    ports:
+      - "80:3000"
+    networks:
+      OsakovskayaAM-my-netology-hw:
 ```
-
-`При необходимости прикрепитe сюда скриншоты
-![Название скриншота](ссылка на скриншот)`
 
 ---
 
 ### Задание 6
 
-`Приведите ответ в свободной форме........`
+`Добавляем в каждый сервис в docker-compose.yml следующие директивы:`
 
-1. `Заполните здесь этапы выполнения, если требуется ....`
-2. `Заполните здесь этапы выполнения, если требуется ....`
-3. `Заполните здесь этапы выполнения, если требуется ....`
-4. `Заполните здесь этапы выполнения, если требуется ....`
-5. `Заполните здесь этапы выполнения, если требуется ....`
-6. 
+1. `Настройка порядка запуска (depends_on)`
+2. `Настройка режимов перезапуска (restart)`
+3. `Настройка общей сети (networks)`
+4. `Запуск в detached режиме выполняется командой docker-compose up -d`
 
 ```
-Поле для вставки кода...
-....
-....
-....
-....
+version: '3.8'
+
+services:
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: OsakovskayaAM-netology-prometheus
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus_data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.enable-lifecycle'
+    ports:
+      - "9090:9090"
+    networks:
+      OsakovskayaAM-my-netology-hw:
+        ipv4_address: 10.5.0.2
+    restart: unless-stopped
+    depends_on:
+      - pushgateway
+
+  pushgateway:
+    image: prom/pushgateway:latest
+    container_name: OsakovskayaAM-netology-pushgateway
+    ports:
+      - "9091:9091"
+    networks:
+      OsakovskayaAM-my-netology-hw:
+        ipv4_address: 10.5.0.3
+    restart: unless-stopped
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: OsakovskayaAM-netology-grafana
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./grafana/grafana.ini:/etc/grafana/grafana.ini
+      - ./grafana/provisioning/:/etc/grafana/provisioning/
+    environment:
+      - GF_PATHS_CONFIG=/etc/grafana/grafana.ini
+    ports:
+      - "80:3000"
+    networks:
+      OsakovskayaAM-my-netology-hw:
+        ipv4_address: 10.5.0.4
+    restart: unless-stopped
+    depends_on:
+      - prometheus
+
+volumes:
+  prometheus_data:
+  grafana_data:
+
+networks:
+  OsakovskayaAM-my-netology-hw:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.5.0.0/16
 ```
-
-`При необходимости прикрепитe сюда скриншоты
-![Название скриншота](ссылка на скриншот)`
-
 ---
 
 ### Задание 7
