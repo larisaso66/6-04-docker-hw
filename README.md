@@ -182,15 +182,13 @@ networks:
       config:
         - subnet: 10.5.0.0/16
 ```
-`Скриншот команды docker ps после запуска docker-compose.yml:
+Скриншот команды docker ps после запуска docker-compose.yml:
 
 <img width="1282" height="214" alt="docker-ps" src="https://github.com/user-attachments/assets/a792f51a-b908-4729-b747-0eb76cea31f1" />
-`
 
-`Cкриншот графика, постоенного на основе метрики:
+Cкриншот графика, постоенного на основе метрики:
 
 <img width="1452" height="829" alt="grafana" src="https://github.com/user-attachments/assets/2befb8f7-eb0d-4b87-a137-959050a3c272" />
-`
 
 ---
 
@@ -199,7 +197,6 @@ networks:
 `Остановка и удаление всех контейнеров выполняется командой docker-compose down`
 
 <img width="1284" height="153" alt="docker-down" src="https://github.com/user-attachments/assets/6e37a360-3ed3-4a25-b0d1-934495d770fe" />
-
 
 ---
 
