@@ -182,7 +182,8 @@ networks:
       config:
         - subnet: 10.5.0.0/16
 ```
-<img width="974" height="189" alt="docker-ps" src="https://github.com/user-attachments/assets/a028689f-b6bf-4b24-a9f7-7fe823ae2874" />
+![Скриншот команды docker ps после запуска docker-compose.yml]
+<img width="1282" height="214" alt="docker-ps" src="https://github.com/user-attachments/assets/a792f51a-b908-4729-b747-0eb76cea31f1" />
 
 ---
 
